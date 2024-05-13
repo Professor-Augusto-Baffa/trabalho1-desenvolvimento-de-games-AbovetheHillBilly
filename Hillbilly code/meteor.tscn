@@ -1,0 +1,178 @@
+[gd_scene load_steps=23 format=3 uid="uid://dud77mhjfmk6a"]
+
+[ext_resource type="Script" path="res://Meteor.cs" id="1_xtthu"]
+[ext_resource type="Texture2D" uid="uid://cefai3pd8r8se" path="res://Objects/Asteroids2.png" id="2_dx0ai"]
+[ext_resource type="PackedScene" uid="uid://dse3yaofw0u38" path="res://particles.tscn" id="2_ejdis"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_730k7"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(158, 0, 79, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ygxgo"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(232, 0, 116, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_803vo"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(321, 0, 107, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qem4q"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(428, 0, 107, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5mnp8"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(138, 93, 96, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2clr"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(234, 93, 96, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2xake"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(330, 93, 96, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndywj"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(426, 93, 96, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2ys3"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(138, 186, 96, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_equ6h"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(234, 186, 96, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8xy7"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(330, 186, 96, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3kj2b"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(426, 186, 96, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ue8j8"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(136, 279, 99, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4l61l"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(235, 279, 99, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7y5l4"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(328, 279, 96, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vx1rc"]
+atlas = ExtResource("2_dx0ai")
+region = Rect2(433, 279, 99, 93)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fdd4i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_730k7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ygxgo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_803vo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qem4q")
+}],
+"loop": true,
+"name": &"meteor1",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5mnp8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2clr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2xake")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndywj")
+}],
+"loop": true,
+"name": &"meteor2",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2ys3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_equ6h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8xy7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3kj2b")
+}],
+"loop": true,
+"name": &"meteor3",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ue8j8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4l61l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7y5l4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vx1rc")
+}],
+"loop": true,
+"name": &"meteor4",
+"speed": 15.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mnano"]
+radius = 31.0
+height = 68.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fuoky"]
+radius = 36.1248
+
+[node name="Meteor" type="RigidBody2D"]
+position = Vector2(847, -14)
+collision_mask = 0
+gravity_scale = 0.0
+contact_monitor = true
+script = ExtResource("1_xtthu")
+ParticlesScn = ExtResource("2_ejdis")
+
+[node name="Meteors" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, -2)
+sprite_frames = SubResource("SpriteFrames_fdd4i")
+animation = &"meteor4"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(7, -13)
+shape = SubResource("CapsuleShape2D_mnano")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(0, -3)
+scale = Vector2(1.2, 1)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(8, -13)
+shape = SubResource("CircleShape2D_fuoky")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

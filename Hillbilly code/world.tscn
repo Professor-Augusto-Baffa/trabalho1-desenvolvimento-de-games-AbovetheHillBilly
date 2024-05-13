@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://cb1dmtvfmjipv"]
+
+[ext_resource type="Script" path="res://world.cs" id="1_vwgwx"]
+[ext_resource type="PackedScene" uid="uid://dud77mhjfmk6a" path="res://meteor.tscn" id="2_6kbhf"]
+[ext_resource type="PackedScene" uid="uid://bflovdy5qhkla" path="res://player.tscn" id="2_dsl48"]
+[ext_resource type="Texture2D" uid="uid://cbdxpxygp1ajh" path="res://Objects/sky.jpg" id="3_xg1nj"]
+[ext_resource type="Texture2D" uid="uid://cqsg6br87b0of" path="res://Objects/star-removebg-preview.png" id="4_4283i"]
+[ext_resource type="AudioStream" uid="uid://clacjs261edpg" path="res://Futurama HD intro.mp3" id="6_g4hfw"]
+
+[sub_resource type="Curve2D" id="Curve2D_yxx5t"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -3, -9, 0, 0, 0, 0, 1198, -9, 0, 0, 0, 0, 1201, 717, 0, 0, 0, 0, -3, 712, 0, 0, 0, 0, -3, -9)
+}
+point_count = 5
+
+[node name="World" type="Node2D"]
+position = Vector2(-2, 2)
+script = ExtResource("1_vwgwx")
+MeteorScn = ExtResource("2_6kbhf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-8, -38)
+scale = Vector2(2, 2)
+texture = ExtResource("3_xg1nj")
+centered = false
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Sprite2D"]
+position = Vector2(1129, 118)
+amount = 50
+lifetime = 17.02
+randomness = 0.3
+texture = ExtResource("4_4283i")
+emission_shape = 3
+emission_rect_extents = Vector2(600, 150)
+scale_amount_min = 0.1
+scale_amount_max = 0.1
+
+[node name="Player" parent="." instance=ExtResource("2_dsl48")]
+position = Vector2(620, 618)
+
+[node name="Meteortimer" type="Timer" parent="."]
+wait_time = 0.324
+autostart = true
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(6, -5)
+curve = SubResource("Curve2D_yxx5t")
+metadata/_edit_group_ = true
+
+[node name="MeteorPath" type="PathFollow2D" parent="Path2D"]
+position = Vector2(-3, -9)
+metadata/_edit_group_ = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_g4hfw")
+volume_db = 2.747
+autoplay = true
+
+[connection signal="timeout" from="Meteortimer" to="." method="OnMeteorTimerTimeout"]
+[connection signal="timeout" from="Meteortimer" to="." method="_on_meteortimer_timeout"]
