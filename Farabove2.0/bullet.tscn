@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://b88e4ut8t0gkj"]
+
+[ext_resource type="Script" path="res://bullet.cs" id="1_yh16n"]
+[ext_resource type="Texture2D" uid="uid://deqjhsxuv6o6d" path="res://Entities/bomb.png" id="2_q7gac"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tm6kr"]
+radius = 0.999098
+height = 10.1608
+
+[node name="Bullet" type="RigidBody2D"]
+position = Vector2(0, 2)
+gravity_scale = -1.892
+lock_rotation = true
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_yh16n")
+damage = 50.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-3, -10)
+rotation = 0.577542
+scale = Vector2(0.05, 0.053)
+texture = ExtResource("2_q7gac")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -2)
+rotation = 1.61327
+shape = SubResource("CapsuleShape2D_tm6kr")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

@@ -1,0 +1,90 @@
+[gd_scene load_steps=13 format=3 uid="uid://bpxdgsgxemccc"]
+
+[ext_resource type="Texture2D" uid="uid://ddwf6y227sr1x" path="res://Sprites/Spaceship-removebg-preview.png" id="1_1h25d"]
+[ext_resource type="Script" path="res://Player.cs" id="1_6aush"]
+[ext_resource type="Script" path="res://Health.cs" id="2_ma54o"]
+[ext_resource type="Script" path="res://Rocket.cs" id="4_6yfmk"]
+[ext_resource type="PackedScene" uid="uid://b88e4ut8t0gkj" path="res://bullet.tscn" id="5_uxmkt"]
+[ext_resource type="AudioStream" uid="uid://dc1oc3b0l1o1n" path="res://Sounds/mixkit-falling-hit-757.wav" id="6_a1mhr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4suba"]
+atlas = ExtResource("1_1h25d")
+region = Rect2(256, 50, 195, 215)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w5e11"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4suba")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2pbf0"]
+radius = 20.0
+height = 98.0
+
+[sub_resource type="Gradient" id="Gradient_jptnb"]
+offsets = PackedFloat32Array(0.230769, 0.472527, 0.78022)
+colors = PackedColorArray(0.94902, 0.266667, 0.0196078, 1, 0.94902, 0.266667, 0.0196078, 1, 0.94902, 0.886275, 0.0196078, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yk804"]
+gradient = SubResource("Gradient_jptnb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vhv61"]
+lifetime_randomness = 0.35
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(0.2, 0.2, 1)
+emission_shape = 3
+emission_box_extents = Vector3(5, 1, 1)
+angle_min = -567.3
+angle_max = 395.7
+spread = 117.273
+initial_velocity_max = 227.28
+angular_velocity_max = 327.57
+gravity = Vector3(0, 98, 0)
+scale_max = 2.0
+color = Color(0.94902, 0.886275, 0.0196078, 1)
+color_initial_ramp = SubResource("GradientTexture1D_yk804")
+collision_mode = 2
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+position = Vector2(646, 627)
+motion_mode = 1
+script = ExtResource("1_6aush")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-9, -11)
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_w5e11")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.2, 0.2)
+shape = SubResource("CapsuleShape2D_2pbf0")
+
+[node name="Sparks" type="GPUParticles2D" parent="."]
+position = Vector2(1, 12)
+scale = Vector2(0.2, 0.04)
+amount = 27
+process_material = SubResource("ParticleProcessMaterial_vhv61")
+lifetime = 2.0
+speed_scale = 1.5
+trail_enabled = true
+trail_lifetime = 0.05
+
+[node name="Health" type="Node2D" parent="."]
+script = ExtResource("2_ma54o")
+
+[node name="Rocket" type="Node2D" parent="."]
+position = Vector2(0, -20)
+script = ExtResource("4_6yfmk")
+bullet_scn = ExtResource("5_uxmkt")
+bps = 1.0
+bullet_damage = 50.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_a1mhr")
+volume_db = 4.0

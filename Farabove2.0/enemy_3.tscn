@@ -1,0 +1,77 @@
+[gd_scene load_steps=11 format=3 uid="uid://clinrgrvd157"]
+
+[ext_resource type="Script" path="res://enemy_3.cs" id="1_a7beh"]
+[ext_resource type="Script" path="res://Health.cs" id="2_pxmwp"]
+[ext_resource type="Texture2D" uid="uid://d34kfh0k4maya" path="res://Sprites/Asteroids2.png" id="3_n21ta"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gjauh"]
+atlas = ExtResource("3_n21ta")
+region = Rect2(151, 93, 91, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4jx8"]
+atlas = ExtResource("3_n21ta")
+region = Rect2(242, 93, 91, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0nhf3"]
+atlas = ExtResource("3_n21ta")
+region = Rect2(333, 93, 91, 93)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qmaru"]
+atlas = ExtResource("3_n21ta")
+region = Rect2(424, 93, 91, 93)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eh2gl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gjauh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4jx8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0nhf3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qmaru")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3co13"]
+radius = 36.9859
+height = 73.9717
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_klepc"]
+radius = 39.0
+height = 78.0
+
+[node name="Enemy3" type="CharacterBody2D" groups=["enemy"]]
+position = Vector2(168, 277)
+script = ExtResource("1_a7beh")
+damage = 1000.0
+randomnessFactor = 1.5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(5, 0)
+sprite_frames = SubResource("SpriteFrames_eh2gl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 4)
+scale = Vector2(1.08941, 1.18964)
+shape = SubResource("CapsuleShape2D_3co13")
+
+[node name="Health" type="Node2D" parent="."]
+script = ExtResource("2_pxmwp")
+max_health = 10.0
+
+[node name="Attack_Range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack_Range"]
+position = Vector2(1, 4)
+shape = SubResource("CapsuleShape2D_klepc")
+
+[connection signal="body_entered" from="Attack_Range" to="." method="OnAttackRanngeBodyEnter"]
+[connection signal="body_exited" from="Attack_Range" to="." method="OnAttackRanngeBodyExit"]

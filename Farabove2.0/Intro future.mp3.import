@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://duirdeguid27q"
+path="res://.godot/imported/Intro future.mp3-cc52d6723a6099be480a76a8a3bff708.mp3str"
+
+[deps]
+
+source_file="res://Intro future.mp3"
+dest_files=["res://.godot/imported/Intro future.mp3-cc52d6723a6099be480a76a8a3bff708.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,195 @@
+[gd_scene load_steps=23 format=3 uid="uid://hy66bpiotapq"]
+
+[ext_resource type="PackedScene" uid="uid://bpxdgsgxemccc" path="res://player.tscn" id="1_ney3g"]
+[ext_resource type="Script" path="res://EnemySpawner.cs" id="2_t1q76"]
+[ext_resource type="PackedScene" uid="uid://bxx5yqkrkruol" path="res://enemy_1.tscn" id="3_nwtnc"]
+[ext_resource type="Script" path="res://EnemySpawner2.cs" id="4_1qu40"]
+[ext_resource type="Script" path="res://EnemySpawner3.cs" id="5_hoxl2"]
+[ext_resource type="PackedScene" uid="uid://ctnd12uftx166" path="res://enemy_2.tscn" id="5_qpfvo"]
+[ext_resource type="Texture2D" uid="uid://dpjdsd7ylgnf8" path="res://Background/Planet3-removebg-preview.png" id="6_sckw6"]
+[ext_resource type="PackedScene" uid="uid://clinrgrvd157" path="res://enemy_3.tscn" id="7_fda8b"]
+[ext_resource type="Texture2D" uid="uid://clg63210pybtd" path="res://Background/Planet2-removebg-preview.png" id="7_wurlr"]
+[ext_resource type="Texture2D" uid="uid://bylrlfv37gqg7" path="res://Background/Star1-removebg-preview.png" id="8_ict44"]
+[ext_resource type="Texture2D" uid="uid://t0j54w3q4x32" path="res://Background/Planet1-removebg-preview.png" id="9_ww7dd"]
+[ext_resource type="AudioStream" uid="uid://g3rwrk7rrtwj" path="res://Merry Christmas Mr Garson2.wav" id="12_uqwno"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_au2ba"]
+
+[sub_resource type="Gradient" id="Gradient_7lpq8"]
+colors = PackedColorArray(0.137255, 0.356863, 0.54902, 1, 0.788235, 0.921569, 0.94902, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xx82p"]
+gradient = SubResource("Gradient_7lpq8")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6tcb8"]
+lifetime_randomness = 0.48
+emission_shape = 3
+emission_box_extents = Vector3(100, 1, 1)
+spread = 70.319
+gravity = Vector3(0, 98, 0)
+scale_min = 2.0
+scale_max = 5.0
+color = Color(0.545098, 0.733333, 0.85098, 1)
+color_initial_ramp = SubResource("GradientTexture1D_xx82p")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ib0l8"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+scale_min = 0.5
+scale_max = 2.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8xgb3"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+
+[sub_resource type="Curve" id="Curve_l3wee"]
+min_value = -1.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_v2q3s"]
+curve = SubResource("Curve_l3wee")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lwb5p"]
+particle_flag_disable_z = true
+angle_max = 87.3
+gravity = Vector3(0, 98, 0)
+scale_min = 0.2
+scale_max = 0.5
+hue_variation_curve = SubResource("CurveTexture_v2q3s")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v6pup"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+
+[node name="Main" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1237.0
+offset_bottom = 716.0
+color = Color(0.0352941, 0.027451, 0.0509804, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_ney3g")]
+position = Vector2(625, 579)
+
+[node name="EnemySpawner" type="Node2D" parent="." node_paths=PackedStringArray("spawn_points")]
+position = Vector2(25, 35)
+script = ExtResource("2_t1q76")
+enemy_scn = ExtResource("3_nwtnc")
+spawn_points = [NodePath("Spawnpoint1"), NodePath("Spawnpoint2"), NodePath("Spawnpoint3"), NodePath("Spawnpoint4")]
+eps = 0.3
+
+[node name="Spawnpoint1" type="Node2D" parent="EnemySpawner"]
+position = Vector2(48, 28)
+rotation = 2.82306
+
+[node name="Spawnpoint2" type="Node2D" parent="EnemySpawner"]
+position = Vector2(1121, -13)
+rotation = 0.44026
+
+[node name="Spawnpoint3" type="Node2D" parent="EnemySpawner"]
+position = Vector2(131, 3.00003)
+rotation = 0.44026
+
+[node name="Spawnpoint4" type="Node2D" parent="EnemySpawner"]
+position = Vector2(159, 7)
+rotation = 0.44026
+
+[node name="EnemySpawner2" type="Node2D" parent="EnemySpawner" node_paths=PackedStringArray("spawn_points")]
+position = Vector2(307, 3)
+script = ExtResource("4_1qu40")
+enemy_scn = ExtResource("5_qpfvo")
+spawn_points = [NodePath("Spawnpoint1")]
+eps = 0.4
+
+[node name="Spawnpoint1" type="Node2D" parent="EnemySpawner/EnemySpawner2"]
+position = Vector2(876, 59)
+
+[node name="EnemySpawner3" type="Node2D" parent="." node_paths=PackedStringArray("spawn_points")]
+position = Vector2(34, 10)
+script = ExtResource("5_hoxl2")
+enemy_scn = ExtResource("7_fda8b")
+spawn_points = [NodePath("Spawnpoint1"), NodePath("Spawnpoint2"), NodePath("Spawnpoint3"), NodePath("Spawnpoint4"), NodePath("Spawnpoint5")]
+eps = 0.2
+
+[node name="Spawnpoint1" type="Node2D" parent="EnemySpawner3"]
+position = Vector2(449, 22)
+
+[node name="Spawnpoint2" type="Node2D" parent="EnemySpawner3"]
+position = Vector2(60, 26)
+
+[node name="Spawnpoint3" type="Node2D" parent="EnemySpawner3"]
+position = Vector2(605, 26)
+
+[node name="Spawnpoint4" type="Node2D" parent="EnemySpawner3"]
+position = Vector2(1010, 8)
+
+[node name="Spawnpoint5" type="Node2D" parent="EnemySpawner3"]
+position = Vector2(716, 5)
+
+[node name="Backgroundelements" type="Node2D" parent="."]
+
+[node name="Stars2" type="GPUParticles2D" parent="Backgroundelements"]
+material = SubResource("CanvasItemMaterial_au2ba")
+position = Vector2(604, 18)
+scale = Vector2(6.84, 0.24)
+amount = 200
+amount_ratio = 0.8099
+sub_emitter = NodePath(".")
+process_material = SubResource("ParticleProcessMaterial_6tcb8")
+lifetime = 25.32
+preprocess = 8.11
+collision_base_size = 28.68
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Backgroundelements"]
+position = Vector2(249, -4)
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_ib0l8")
+texture = ExtResource("6_sckw6")
+lifetime = 122.62
+preprocess = 105.41
+speed_scale = 0.3
+randomness = 1.0
+trail_lifetime = 0.01
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="Backgroundelements"]
+position = Vector2(1023, -3)
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_8xgb3")
+texture = ExtResource("7_wurlr")
+lifetime = 40.0
+preprocess = 16.22
+speed_scale = 0.5
+
+[node name="GPUParticles2D3" type="GPUParticles2D" parent="Backgroundelements"]
+position = Vector2(852, 12)
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_lwb5p")
+texture = ExtResource("8_ict44")
+lifetime = 49.66
+preprocess = 8.1
+speed_scale = 0.4
+trail_lifetime = 0.01
+
+[node name="GPUParticles2D4" type="GPUParticles2D" parent="Backgroundelements"]
+position = Vector2(512, -25)
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_lwb5p")
+texture = ExtResource("8_ict44")
+lifetime = 57.76
+preprocess = 5.0
+speed_scale = 0.4
+trail_lifetime = 0.58
+
+[node name="GPUParticles2D5" type="GPUParticles2D" parent="Backgroundelements"]
+position = Vector2(409, 7)
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_v6pup")
+texture = ExtResource("9_ww7dd")
+lifetime = 92.43
+preprocess = 2.0
+speed_scale = 0.9
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_uqwno")
+autoplay = true

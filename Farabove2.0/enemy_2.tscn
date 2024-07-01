@@ -1,0 +1,95 @@
+[gd_scene load_steps=10 format=3 uid="uid://ctnd12uftx166"]
+
+[ext_resource type="Script" path="res://enemy_2.cs" id="1_oenhu"]
+[ext_resource type="Script" path="res://Health.cs" id="2_bv7wc"]
+[ext_resource type="Texture2D" uid="uid://bd0bcub1r54fe" path="res://Sprites/Alien_ship2-removebg-preview.png" id="3_pgan6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eh2gl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_pgan6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_86vsr"]
+offsets = PackedFloat32Array(0.043956, 0.472527, 0.934066)
+colors = PackedColorArray(0.0941176, 0.266667, 0.913725, 1, 0.94902, 0.266667, 0.866667, 1, 0.376744, 0.983879, 0.857884, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5df0x"]
+gradient = SubResource("Gradient_86vsr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wf4pt"]
+lifetime_randomness = 0.35
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(0.2, 0.2, 1)
+emission_shape = 3
+emission_box_extents = Vector3(10, 1, 1)
+angle_min = -567.3
+angle_max = 395.7
+spread = 117.273
+initial_velocity_max = 227.28
+angular_velocity_max = 327.57
+orbit_velocity_min = 0.364
+orbit_velocity_max = 1.368
+gravity = Vector3(-2, -8, 0)
+scale_max = 5.0
+color = Color(0.376744, 0.983879, 0.857884, 1)
+color_initial_ramp = SubResource("GradientTexture1D_5df0x")
+anim_speed_max = 5.82
+turbulence_enabled = true
+collision_mode = 2
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3co13"]
+radius = 57.0
+height = 128.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_klepc"]
+radius = 64.0
+height = 128.0
+
+[node name="Enemy2" type="CharacterBody2D" groups=["enemy"]]
+position = Vector2(200, 280)
+script = ExtResource("1_oenhu")
+Speed = 100.0
+damage = 30.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 1.58016
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_eh2gl")
+
+[node name="Sparks" type="GPUParticles2D" parent="."]
+position = Vector2(-22, 1)
+rotation = 1.65686
+scale = Vector2(0.122615, -0.0116328)
+amount = 43
+process_material = SubResource("ParticleProcessMaterial_wf4pt")
+lifetime = 2.0
+speed_scale = 3.0
+explosiveness = 0.35
+trail_enabled = true
+trail_lifetime = 0.52
+trail_sections = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.3, 0.3)
+shape = SubResource("CapsuleShape2D_3co13")
+
+[node name="Health" type="Node2D" parent="."]
+script = ExtResource("2_bv7wc")
+max_health = 200.0
+
+[node name="Attack_Range" type="Area2D" parent="."]
+rotation = 0.208563
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack_Range"]
+position = Vector2(-1.18538, -0.771275)
+scale = Vector2(0.3, 0.3)
+shape = SubResource("CapsuleShape2D_klepc")
+
+[connection signal="body_entered" from="Attack_Range" to="." method="OnAttackRanngeBodyEnter"]
+[connection signal="body_exited" from="Attack_Range" to="." method="OnAttackRanngeBodyExit"]
